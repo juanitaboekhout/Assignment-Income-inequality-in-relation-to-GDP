@@ -1,0 +1,33 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
+
+gini_df = pd.read_csv('/content/economic-inequality-gini-index.csv')
+gini_df
+
+gini_df.columns
+
+gini_df = gini_df[['Entity','Gini index']]  
+gini_df
+
+gini_df['Gini index'].isnull().sum() / len(gini_df)
+
+gdp_df = pd.read_csv('/content/gdp-per-capita-maddison-2020.csv')
+gdp_df
+
+gdp_df.columns
+
+gdp_df = gdp_df[['Entity', 'GDP per capita']]
+gdp_df 
+
+gdp_df['GDP per capita'].isnull().sum() / len(gdp_df)
+
+gini_gdp = pd.merge(gini_df, gdp_df, how="inner", on = "Entity")
+gini_gdp 
+
+correlation_gini_gdp = gini_gdp.dropna().corr()
+correlation_gini_gdp
+
+#De correlatie tussen Gini en GDP = -1,21 dus negatief. Er is dus wel eeen correlatie tussen de Gini index en GDP per capita maar dit is een negatieve correlatie 
+#Wat betekent dat als de ene variabele toeneemt de andere juist afneemt.
